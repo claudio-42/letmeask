@@ -1,7 +1,8 @@
 import { FormEvent, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import logoImg from "../assets/images/logo.svg";
+import logoImgDark from "../assets/images/logo-dark.svg";
 
 import { Button } from "../components/Button/Button";
 import { Question } from "../components/Question/Question";
@@ -9,6 +10,9 @@ import { RoomCode } from "../components/RoomCode/Roomcode";
 import { useAuth } from "../hooks/useAuth";
 import { useRoom } from "../hooks/useRoom";
 import { database } from "../services/firebase";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "../styles/room.scss";
 
@@ -21,6 +25,8 @@ export function Room() {
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState("");
   const roomId = params.id;
+  const history = useHistory();
+  const notify = () => toast("Pergunta enviada com sucesso!");
 
   const { title, questions } = useRoom(roomId);
 
@@ -69,7 +75,16 @@ export function Room() {
     <div id="page-room">
       <header>
         <div className="content">
-          <img src={logoImg} alt="Letmeask" />
+          <img
+            src={
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? logoImgDark
+                : logoImg
+            }
+            alt="Letmeask"
+            onClick={() => history.push("/")}
+          />
+
           <RoomCode code={roomId} />
         </div>
       </header>
@@ -98,10 +113,21 @@ export function Room() {
                 Para enviar uma pergunta, <button>faça seu login</button>.
               </span>
             )}
-            <Button type="submit" disabled={!user}>
+            <Button type="submit" disabled={!user} onClick={notify}>
               Enviar pergunta
             </Button>
           </div>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </form>
 
         <div className="question-list">

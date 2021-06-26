@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 
 import illustrationImg from "../assets/images/illustration.svg";
 import logoImg from "../assets/images/logo.svg";
+import logoImgDark from "../assets/images/logo-dark.svg";
 import googleIconImg from "../assets/images/google-icon.svg";
 
 import "../styles/auth.scss";
@@ -57,7 +58,14 @@ export function Home() {
       </aside>
       <main>
         <div className="main-content">
-          <img src={logoImg} alt="Letmask" />
+          <img
+            src={
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? logoImgDark
+                : logoImg
+            }
+            alt="Letmeask"
+          />
           <button onClick={handleCreateRoom} className="create-room">
             <img src={googleIconImg} alt="Logo do Google" />
             <img src="" alt="" />

@@ -3,15 +3,13 @@ import { FormEvent, useState } from "react";
 
 import illustrationImg from "../assets/images/illustration.svg";
 import logoImg from "../assets/images/logo.svg";
+import logoImgDark from "../assets/images/logo-dark.svg";
 
 import "../styles/auth.scss";
 import { Button } from "../components/Button/Button";
 import { database } from "../services/firebase";
 
 import { useAuth } from "../hooks/useAuth";
-
-//import { useContext } from "react";
-//import { AuthContext } from "../contexts/AuthContext";
 
 export function NewRoom() {
   const { user } = useAuth();
@@ -47,7 +45,15 @@ export function NewRoom() {
       </aside>
       <main>
         <div className="main-content">
-          <img src={logoImg} alt="Letmask" />
+          <img
+            src={
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? logoImgDark
+                : logoImg
+            }
+            alt="Letmeask"
+            onClick={() => history.push("/")}
+          />
           <h2>Criar uma nova sala</h2>
           <form onSubmit={handleCreateRoom}>
             <input

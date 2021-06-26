@@ -4,14 +4,25 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #f8f8f8;
-  color: #29292e;
-}
-
 body,
 input,
 button,
 textarea {
   font: 400 16px "Roboto", sans-serif;
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  body {
+    background: #f8f8f8;
+    color: #29292e;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #29292e;
+    color: #f8f8f8;
+  }
 }
